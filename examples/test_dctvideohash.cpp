@@ -21,9 +21,11 @@
     David Starkweather - dstarkweather@phash.org
 
 */
-
+#include <chrono>
 #include "pHash.h"
 #include "stdio.h"
+
+using namespace std::chrono;
 
 int main(int argc, char **argv) {
     if (argc < 2) {
@@ -41,7 +43,16 @@ int main(int argc, char **argv) {
 
     for (int i = 1; i < argc; i++) {
         printf("Hashing %s...\n", argv[i]);
+        // timestamp
+        uint64_t msStart = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+        ).count();
         hashes[i - 1] = ph_dct_videohash(argv[i], lengths[i - 1]);
+        // timestamp
+        uint64_t msEnd = duration_cast< milliseconds >(
+            system_clock::now().time_since_epoch()
+        ).count();
+        printf("Time to hash (ms): %ld\n", msEnd - msStart );
         if (hashes[i - 1] == NULL) {
             printf("Failed to hash video: %s\n", argv[i]);
             break;
@@ -50,8 +61,17 @@ int main(int argc, char **argv) {
                lengths[i - 1]);
         // If this isn't the first hash, then compare to the first.
         if (i > 1) {
+            // timestamp
+            uint64_t msStart = duration_cast< milliseconds >(
+                system_clock::now().time_since_epoch()
+            ).count();
             float similarity = ph_dct_videohash_dist(
                 hashes[0], lengths[0], hashes[i - 1], lengths[i - 1]);
+            // timestamp
+            uint64_t msEnd = duration_cast< milliseconds >(
+                system_clock::now().time_since_epoch()
+            ).count();
+            printf("Time to compare (ms): %ld\n", msEnd - msStart );
             printf("%s similarity: %f\n", argv[i], similarity);
         }
         printf("\n");

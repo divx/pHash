@@ -27,9 +27,11 @@
 #include <stdio.h>
 #include <algorithm>
 #include <vector>
+#include <chrono>
 #include "pHash.h"
 
 using namespace std;
+using namespace std::chrono;
 
 #define TRUE 1
 #define FALSE 0
@@ -93,8 +95,19 @@ int main(int argc, char **argv) {
             strcat(path, dir_name);
             strcat(path, "/");
             strcat(path, dir_entry->d_name);
+            // timestamp
+            uint64_t msStart = duration_cast< milliseconds >(
+                system_clock::now().time_since_epoch()
+            ).count();
             if (ph_dct_imagehash(path, tmphash) < 0)  // calculate the hash
+            {
                 continue;
+            }
+            // timestamp
+            uint64_t msEnd = duration_cast< milliseconds >(
+                system_clock::now().time_since_epoch()
+            ).count();
+            printf("path: %s Time to hash (ms): %ld\n\n", path, msEnd - msStart );
             dp = ph_malloc_imagepoint();  // store in structure with file name
             dp->id = dir_entry->d_name;
             dp->hash = tmphash;
@@ -127,8 +140,12 @@ int main(int argc, char **argv) {
             strcat(path, dir_name2);
             strcat(path, "/");
             strcat(path, dir_entry->d_name);
+            // timestamp
             if (ph_dct_imagehash(path, tmphash) < 0)  // calculate the hash
+            {
+                // timestamp
                 continue;
+            }
             dp = ph_malloc_imagepoint();  // store in structure with filename
             dp->id = dir_entry->d_name;
             dp->hash = tmphash;
@@ -173,10 +190,19 @@ int main(int argc, char **argv) {
         for (int j = i + 1; j < nbfiles1; j++) {
             printf(" %s %s ", hashlist1[i].id, hashlist1[j].id);
 
+            // timestamp
+            uint64_t msStart = duration_cast< milliseconds >(
+                system_clock::now().time_since_epoch()
+            ).count();
             // calculate distance
             distance =
                 ph_hamming_distance(hashlist1[i].hash, hashlist1[j].hash);
 
+            // timestamp
+            uint64_t msEnd = duration_cast< milliseconds >(
+                system_clock::now().time_since_epoch()
+            ).count();
+            printf("Time to compare (ms): %ld\n", msEnd - msStart );
             printf(" dist = %d\n", distance);
         }
     }
