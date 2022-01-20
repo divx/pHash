@@ -28,7 +28,7 @@
 #define cimg_display 0
 #define cimg_debug 0
 
-#include "CImg.h"
+#include "../third-party/CImg/CImg.h"
 
 #define __STDC_CONSTANT_MACROS
 

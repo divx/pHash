@@ -12,9 +12,9 @@ set(pHash_VERSION_PATCH 0)
 OPTION(PHASH_DYNAMIC   "Build pHash dynamic library"                     ON)
 OPTION(PHASH_STATIC    "Build pHash static library"                     OFF)
 OPTION(WITH_AUDIO_HASH "Audio hash support"                             OFF)
-OPTION(WITH_VIDEO_HASH "Video hash support"                             OFF)
+OPTION(WITH_VIDEO_HASH "Video hash support"                             ON)
 OPTION(PHASH_BINDINGS  "Compile foreign programming languages bindings" OFF)
-OPTION(PHASH_EXAMPLES  "Compile examples"                               OFF)
+OPTION(PHASH_EXAMPLES  "Compile examples"                               ON)
 
 set(HAVE_IMAGE_HASH 1)
 
@@ -58,7 +58,6 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BUILD_TYPE}")
 
 link_directories(/usr/local/lib)
 include_directories(/usr/local/include)
-
 
 set(LIBS_DEPS png z jpeg tiff)
 
