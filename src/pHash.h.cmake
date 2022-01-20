@@ -57,7 +57,7 @@
 #define cimg_use_tiff 1
 #define cimg_debug 0
 #define cimg_display 0
-#include "CImg.h"
+#include "../third-party/CImg/CImg.h"
 using namespace cimg_library;
 #endif
 

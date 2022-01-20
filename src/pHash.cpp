@@ -531,6 +531,8 @@ ulong64 *ph_dct_videohash(const char *filename, int &Length) {
     if (keyframes == NULL) return NULL;
 
     Length = keyframes->size();
+    printf("sizeof: %ld and Length: %d\n", sizeof(ulong64), Length );
+
 
     ulong64 *hash = (ulong64 *)malloc(sizeof(ulong64) * Length);
     const CImg<float> &C = dct_matrix;
